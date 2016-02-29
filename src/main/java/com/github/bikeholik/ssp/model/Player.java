@@ -23,5 +23,13 @@ public class Player {
             this.player = player;
             this.shape = shape;
         }
+
+        public Player getPlayer() {
+            return player;
+        }
+
+        public Shape getShape() {
+            return shape;
+        }
     }
 }

@@ -52,7 +52,9 @@ public class BettingRoundResolverTest {
         when(firstPlayerBettingStrategy.getShape()).thenReturn(SCISSORS);
         when(secondPlayerBettingStrategy.getShape()).thenReturn(PAPER);
 
-        assertThat(roundResolver.resolve(firstPlayer.getBet(), secondPlayer.getBet()), is(Optional.of(firstPlayer)));
+        Player.Bet firstPlayerBet = firstPlayer.getBet();
+
+        assertThat(roundResolver.resolve(firstPlayerBet, secondPlayer.getBet()), is(Optional.of(firstPlayerBet)));
     }
 
     @Test
@@ -60,6 +62,8 @@ public class BettingRoundResolverTest {
         when(firstPlayerBettingStrategy.getShape()).thenReturn(SCISSORS);
         when(secondPlayerBettingStrategy.getShape()).thenReturn(ROCK);
 
-        assertThat(roundResolver.resolve(firstPlayer.getBet(), secondPlayer.getBet()), is(Optional.of(secondPlayer)));
+        Player.Bet secondPlayerBet = secondPlayer.getBet();
+
+        assertThat(roundResolver.resolve(firstPlayer.getBet(), secondPlayerBet), is(Optional.of(secondPlayerBet)));
     }
 }
