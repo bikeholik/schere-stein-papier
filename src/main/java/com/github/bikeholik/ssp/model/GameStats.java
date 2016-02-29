@@ -17,6 +17,15 @@ public class GameStats {
     }
 
     public void addResult(Optional<Player.Bet> winner) {
+        if (winner.isPresent()) {
+            Integer currentWinnings = winnings.computeIfAbsent(winner.get().getPlayer(), player -> 0);
+            winnings.put(winner.get().getPlayer(), currentWinnings + 1);
+        } else {
+            draws++;
+        }
+    }
 
+    public void merge(GameStats gameStats) {
+        throw new UnsupportedOperationException();
     }
 }
