@@ -11,8 +11,13 @@ public class Player {
         this.bettingStrategy = bettingStrategy;
     }
 
-    public Bet getBet(){
+    public Bet getBet() {
         return new Bet(this, bettingStrategy.getShape());
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     public static class Bet {
