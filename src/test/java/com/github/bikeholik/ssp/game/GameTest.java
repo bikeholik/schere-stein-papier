@@ -1,19 +1,6 @@
 package com.github.bikeholik.ssp.game;
 
-import com.github.bikeholik.ssp.model.GameStats;
-import com.github.bikeholik.ssp.model.Player;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.MatcherAssert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Optional;
-import java.util.stream.Collectors;
-
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.summingInt;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -21,6 +8,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import com.github.bikeholik.ssp.model.GameStats;
+import com.github.bikeholik.ssp.model.Player;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameTest {
@@ -36,7 +33,7 @@ public class GameTest {
 
     @Before
     public void setUp() throws Exception {
-        game = new Game(ROUNDS_COUNT, roundResolver);
+        game = new Game(ROUNDS_COUNT, roundResolver, emptyList());
         when(player.getBet()).then(invocationOnMock -> mock(Player.Bet.class));
     }
 

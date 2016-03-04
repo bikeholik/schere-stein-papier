@@ -1,18 +1,16 @@
 package com.github.bikeholik.ssp.game;
 
+import static java.util.Collections.singletonList;
+
 import com.github.bikeholik.ssp.model.GameStats;
 import com.github.bikeholik.ssp.model.Player;
-import com.github.bikeholik.ssp.model.Shape;
-import com.github.bikeholik.ssp.strategy.FixedBettingStrategy;
 import com.github.bikeholik.ssp.strategy.RandomBettingStrategy;
+import com.github.bikeholik.ssp.strategy.RetrospectiveBettingStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-
-import static com.github.bikeholik.ssp.model.Shape.ROCK;
 
 @Component
 public class SampleGameRunner implements ApplicationRunner {
@@ -21,15 +19,18 @@ public class SampleGameRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-        Player playerPlayingWithRockAlways = new Player("rock-playing", new FixedBettingStrategy(ROCK));
+//        Player playerPlayingWithRockAlways = new Player("rock-playing", new FixedBettingStrategy(ROCK));
         Player playerPlayingRandomly = new Player("randomly-playing", new RandomBettingStrategy());
 
-        Game game = new Game(100, new BettingRoundResolver());
+        RetrospectiveBettingStrategy retrospectiveBettingStrategy = new RetrospectiveBettingStrategy();
+        Player playerWithRetrospectiveStrategy = new Player("retro-playing", retrospectiveBettingStrategy);
 
-        GameStats gameStats = game.play(playerPlayingWithRockAlways, playerPlayingRandomly);
+        Game game = new Game(100, new BettingRoundResolver(), singletonList(retrospectiveBettingStrategy));
+
+        GameStats gameStats = game.play(playerWithRetrospectiveStrategy, playerPlayingRandomly);
 
         gameStats.getWinnings().entrySet()
-                .forEach(entry -> logger.info("player={} winnginsCount={}", entry.getKey(), entry.getValue()));
+                .forEach(entry -> logger.info("player={} winningsCount={}", entry.getKey(), entry.getValue()));
         logger.info("drawsCount={}", gameStats.getDraws());
     }
 }
